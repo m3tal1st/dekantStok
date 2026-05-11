@@ -119,7 +119,6 @@
         }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         
-        /* Kapatma Butonu (iOS Tarzı Çizgi) */
         .modal-drag-handle { width: 40px; height: 5px; background: #cbd5e1; border-radius: 10px; margin: 0 auto 20px auto; }
         .close-btn-circle { position: absolute; top: 15px; right: 20px; width: 36px; height: 36px; background: var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; color: var(--text-dark); border: none; cursor: pointer;}
         
@@ -131,14 +130,12 @@
             width: 100%; padding: 16px; font-size: 16px; border-radius: 14px; outline: none; margin-bottom: 20px; 
             background: var(--bg-card); border: 2px solid var(--border); color: var(--text-dark); font-weight: 700;
         }
-        /* Mobile Safari Zoom Bug Fix (Font size strictly 16px) */
         input[type="text"], input[type="number"], input[type="date"], select { font-size: 16px !important; }
 
         .custom-select.empty-field { border: 2px dashed #fca5a5; background-color: var(--primary-light); color: #b91c1c; }
         .custom-select.filled-field, .dyn-new-input.filled-field { border: 2px solid var(--success); box-shadow: 0 4px 10px rgba(16, 185, 129, 0.1); }
         .dyn-new-input { display: none; margin-top: -10px; border: 2px dashed #fca5a5; background: var(--primary-light); }
 
-        /* Qty Stepper */
         .qty-wrapper { display: flex; align-items: center; gap: 10px; margin-bottom: 25px; justify-content: center;}
         .qty-btn { width: 50px; height: 50px; font-size: 26px; font-weight: bold; background: var(--bg-card); border: 2px solid var(--border); border-radius: 14px; color: var(--text-dark);}
         .qty-input { width: 100px; height: 50px; font-size: 24px; font-weight: 900; text-align: center; border: 2px solid var(--success); border-radius: 14px; outline: none; background: #fff; color: var(--success);}
@@ -148,13 +145,9 @@
         .btn-action-in { background: var(--success); box-shadow: 0 6px 15px rgba(16, 185, 129, 0.3); }
         .btn-action-out { background: var(--danger); box-shadow: 0 6px 15px rgba(239, 68, 68, 0.3); }
 
-        /* ========================================================= */
-        /* YENİ KART (CARD) TASARIMLARI (TABLO YERİNE)               */
-        /* ========================================================= */
-        
+        /* --- KART TASARIMLARI (TABLO YERİNE) --- */
         .list-container { display: flex; flex-direction: column; gap: 15px; padding-bottom: 20px;}
         
-        /* DETAY KARTI */
         .detail-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 15px; box-shadow: var(--shadow-sm);}
         .detail-attrs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border);}
         .attr-badge { background: var(--bg-body); padding: 6px 10px; border-radius: 8px; font-size: 13px; font-weight: 800; color: var(--text-muted); border: 1px solid var(--border);}
@@ -164,7 +157,6 @@
         .stock-label { font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;}
         .stock-value { font-size: 32px; font-weight: 900; color: var(--primary); }
 
-        .row-note-input { width: 100%; padding: 12px; font-size: 14px; font-weight: 600; border: 1px solid var(--border); border-radius: 10px; outline: none; background: var(--bg-body); margin-bottom: 10px;}
         .detail-action-row { display: flex; flex-direction: column; gap: 10px; }
         .detail-action-controls { display: flex; gap: 8px; align-items: center; }
         
@@ -176,7 +168,6 @@
         .quick-btn.out { background: var(--danger); }
         .quick-btn.in { background: var(--success); }
 
-        /* GEÇMİŞ KARTI */
         .log-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 15px; box-shadow: var(--shadow-sm);}
         .log-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .log-date { font-size: 12px; font-weight: 800; color: var(--text-muted); }
@@ -189,12 +180,10 @@
         .log-desc b { color: var(--text-dark); font-size: 15px;}
         .log-note-box { background: var(--bg-body); border-left: 3px solid var(--primary); padding: 8px 10px; border-radius: 0 8px 8px 0; font-size: 13px; font-weight: 600; color: var(--text-muted);}
 
-        /* FİLTRELER */
         .filter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;}
         .filter-input { margin-bottom: 0; padding: 12px; font-size: 14px; border-radius: 10px;}
         .search-full { grid-column: 1 / -1; }
 
-        /* CONFIRM BOX */
         .confirm-box { text-align: center; font-size: 18px; line-height: 1.6; color: var(--text-dark); padding: 10px 0; font-weight: 600;}
         .highlight { font-size: 20px; font-weight: 900; color: var(--primary); text-transform: uppercase; padding: 4px 8px; background: var(--primary-light); border-radius: 8px; display: inline-block; margin: 2px 0;}
         
@@ -202,7 +191,7 @@
         .empty-state-icon { font-size: 60px; margin-bottom: 15px; opacity: 0.8;}
         .empty-state-text { font-size: 18px; font-weight: 900; margin-bottom: 20px;}
 
-        /* MASAÜSTÜ İÇİN UFAK DÜZENLEMELER (Büyük Ekran) */
+        /* MASAÜSTÜ İÇİN UFAK DÜZENLEMELER */
         @media (min-width: 768px) {
             .header { border-radius: var(--radius-lg); margin-bottom: 30px; }
             .tabs-wrapper { margin-top: 30px; }
@@ -213,7 +202,6 @@
             .modal-overlay { align-items: center; padding: 20px; }
             .modal-drag-handle { display: none; }
             .close-btn-circle { top: 25px; right: 25px; width: 45px; height: 45px; font-size: 28px;}
-            
             .dashboard-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
             .stock-card { padding: 35px; }
             .main-content { padding: 20px 40px; }
@@ -236,11 +224,8 @@
 </head>
 <body>
 
-    <!-- HEADER -->
     <div class="header">
-        <!-- Ayarlar Butonu (Masaüstü vs Mobil konumlandırma) -->
-        <button class="settings-btn" onclick="openModal('settingsModal')" style="z-index: 100;">⚙️ Ayarlar</button>
-        
+        <button class="settings-btn" onclick="openSettingsWithPassword()" style="z-index: 100;">⚙️ Ayarlar</button>
         <h1 class="brand-title">Dekant</h1>
         <h2 class="brand-subtitle">Profesyonel Stok Yönetimi</h2>
         
@@ -249,11 +234,7 @@
         </div>
     </div>
 
-    <!-- MAIN CONTENT (KAYDIRILABİLİR ALAN) -->
     <div class="main-content">
-        <!-- MASAÜSTÜ BUTONLARI BURADA GÖRÜNÜR, MOBİLDE GİZLENİR (CSS ile ayarlı değil, Fixed yapıldı) -->
-        
-        <!-- DASHBOARD -->
         <div class="dashboard-grid" id="dashboardContainer"></div>
     </div>
 
@@ -361,10 +342,8 @@
                 <select id="quickUserSelect" class="custom-select empty-field" style="margin:0; padding:14px; font-size:15px;" onchange="validateField(this)"></select>
             </div>
 
-            <!-- TABLO YERİNE KART LİSTESİ -->
-            <div class="list-container" id="detailListContainer">
-                <!-- Javascript ile Kartlar Gelecek -->
-            </div>
+            <!-- KART LİSTESİ -->
+            <div class="list-container" id="detailListContainer"></div>
         </div>
     </div>
 
@@ -385,10 +364,8 @@
                 <input type="text" id="logSearchInput" placeholder="Arama yap..." onkeyup="filterLogs()" class="filter-input search-full" style="background:#fff;">
             </div>
 
-            <!-- TABLO YERİNE KART LİSTESİ -->
-            <div class="list-container" id="logListContainer">
-                <!-- Javascript ile Kartlar Gelecek -->
-            </div>
+            <!-- KART LİSTESİ -->
+            <div class="list-container" id="logListContainer"></div>
         </div>
     </div>
 
@@ -422,7 +399,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // --- GLOBAL DEĞİŞKENLER (v15) ---
+        // --- GLOBAL DEĞİŞKENLER (v15 DEVAM) ---
         let dbData = { users: {}, departments: {}, materials: {} };
         let dbStock = {};
         let dbLogs = [];
@@ -459,7 +436,7 @@
             if(document.getElementById('historyModal').style.display === 'flex') filterLogs(); 
         });
 
-        // --- GÖRSEL DOĞRULAMA (VALIDATION) ---
+        // --- GÖRSEL DOĞRULAMA ---
         window.validateField = function(el) {
             if(!el) return;
             if(el.value.trim() === "" || el.value === "__NEW__") {
@@ -477,6 +454,16 @@
         window.validateNoteField = function(el) {
             if(el.value.trim() !== "") { el.classList.add('filled-field'); } 
             else { el.classList.remove('filled-field'); }
+        };
+
+        // --- ŞİFRELİ AYARLAR GİRİŞİ ---
+        window.openSettingsWithPassword = () => {
+            const pass = prompt("Ayarlara girmek için şifreyi girin:");
+            if (pass === "00") {
+                openModal('settingsModal');
+            } else if (pass !== null) {
+                alert("Hatalı şifre!");
+            }
         };
 
         // --- UI RENDER ---
@@ -546,7 +533,7 @@
                         <div class="card-amount">${total}</div>
                         <div class="card-hint">
                             <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                            Detay
+                            Detayları Yönet
                         </div>
                     </div>
                 `;
@@ -558,7 +545,7 @@
             const uCont = document.getElementById('settingsUsersList');
             uCont.innerHTML = '';
             Object.entries(dbData.users).forEach(([id, name]) => {
-                uCont.innerHTML += `<div class="pill">${name} <div class="pill-actions"><button class="pill-action-btn delete" onclick="deleteDbNode('config/users/${id}')">&times;</button></div></div>`;
+                uCont.innerHTML += `<div class="pill">${name} <div class="pill-actions"><button class="pill-action-btn edit" onclick="editSimpleItem('users', '${id}', '${name}')">✏️</button><button class="pill-action-btn delete" onclick="deleteDbNode('config/users/${id}')">&times;</button></div></div>`;
             });
 
             const dCont = document.getElementById('settingsDepsList');
@@ -567,7 +554,7 @@
             
             dCont.innerHTML = ''; dSelect.innerHTML = '<option value="">-- Bölüm --</option>';
             Object.entries(dbData.departments).forEach(([id, name]) => {
-                dCont.innerHTML += `<div class="pill" style="border-color:var(--primary);">${name} <div class="pill-actions"><button class="pill-action-btn delete" onclick="deleteDbNode('config/departments/${id}')">&times;</button></div></div>`;
+                dCont.innerHTML += `<div class="pill" style="border-color:var(--primary);">${name} <div class="pill-actions"><button class="pill-action-btn edit" onclick="editSimpleItem('departments', '${id}', '${name}')">✏️</button><button class="pill-action-btn delete" onclick="deleteDbNode('config/departments/${id}')">&times;</button></div></div>`;
                 dSelect.innerHTML += `<option value="${id}">${name.toUpperCase()}</option>`;
             });
             dSelect.value = currentDepVal;
@@ -579,6 +566,13 @@
             if(!val) return;
             push(ref(db, `db_v15/config/${node}`), val);
             document.getElementById(inputId).value = '';
+        };
+
+        window.editSimpleItem = (node, id, oldVal) => {
+            const newVal = prompt("Yeni ismi girin:", oldVal);
+            if(newVal && newVal.trim() !== "" && newVal !== oldVal) {
+                set(ref(db, `db_v15/config/${node}/${id}`), newVal.trim());
+            }
         };
 
         window.deleteDbNode = (path) => { if(confirm("Emin misiniz?")) remove(ref(db, `db_v15/${path}`)); };
@@ -634,6 +628,14 @@
             renderTempAttributes();
         };
 
+        window.editTempOption = (attrIndex, optIndex, oldVal) => {
+            const newVal = prompt("Seçeneği düzenleyin:", oldVal);
+            if(newVal && newVal.trim() !== "" && newVal !== oldVal) {
+                tempAttributes[attrIndex].options[optIndex] = newVal.trim();
+                renderTempAttributes();
+            }
+        };
+
         window.removeTempOption = (attrIndex, optIndex) => { tempAttributes[attrIndex].options.splice(optIndex, 1); renderTempAttributes(); };
 
         function renderTempAttributes() {
@@ -641,7 +643,7 @@
             cont.innerHTML = '';
             tempAttributes.forEach((attr, i) => {
                 let optsArray = attr.options || [];
-                let pills = optsArray.map((opt, j) => `<div class="pill">${opt} <div class="pill-actions"><button class="pill-action-btn delete" onclick="removeTempOption(${i}, ${j})">&times;</button></div></div>`).join('');
+                let pills = optsArray.map((opt, j) => `<div class="pill">${opt} <div class="pill-actions"><button class="pill-action-btn edit" onclick="editTempOption(${i}, ${j}, '${opt}')">✏️</button><button class="pill-action-btn delete" onclick="removeTempOption(${i}, ${j})">&times;</button></div></div>`).join('');
                 cont.innerHTML += `
                     <div class="attr-builder-box" style="padding:15px; border: 2px dashed var(--border); border-radius:12px; margin-bottom:15px;">
                         <input type="text" class="filter-input" style="font-weight:900; color:var(--text-dark); border:none; border-bottom:2px dashed var(--border); border-radius:0; padding:5px; margin-bottom:10px;" value="${attr.name}" onchange="updateTempAttrName(${i}, this.value)">
@@ -794,7 +796,14 @@
             }
 
             if(updatedMatObj) set(ref(db, `db_v15/config/materials/${matId}`), updatedMatObj);
-            set(ref(db, `db_v15/stock/${matId}/${safeVar}`), { qty: newQty, note: note });
+            
+            // Eğer detay ekranından geliyorsa ve yeni bir not girilmediyse eski notu koru
+            let finalNote = note;
+            if(source === 'detail' && !note) {
+                finalNote = currentObj.note || "";
+            }
+
+            set(ref(db, `db_v15/stock/${matId}/${safeVar}`), { qty: newQty, note: finalNote });
 
             const now = new Date();
             const timeStr = now.toLocaleDateString('tr-TR') + " " + now.toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
@@ -802,7 +811,7 @@
             push(ref(db, `db_v15/logs`), {
                 time: timeStr, user: user,
                 detail: `<b>${matName.toUpperCase()}</b> <br><span style="font-size:13px; color:var(--text-muted);">${variant} | ${qty} Birim</span>`,
-                note: note, status: type === 'in' ? 'Giriş' : 'Çıkış'
+                note: finalNote, status: type === 'in' ? 'Giriş' : 'Çıkış'
             });
 
             closeModal('confirmModal');
@@ -811,7 +820,7 @@
             pendingTx = null;
         };
 
-        // --- DETAYLI STOK MODALI (KART SİSTEMİ) ---
+        // --- DETAYLI STOK MODALI (KART SİSTEMİ - NOT KALDIRILDI) ---
         window.openDetailModal = (matId) => {
             currentDetailMatId = matId;
             renderDetailModal(matId);
@@ -856,6 +865,7 @@
 
                         let noteHtml = note ? `<div style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">📝 ${note}</div>` : '';
 
+                        // Hızlı işlemde Not kutusu kaldırıldı
                         listContainer.innerHTML += `
                             <div class="detail-card">
                                 <div class="detail-attrs">${attrsHtml}</div>
@@ -865,11 +875,10 @@
                                     <span class="stock-value">${qty}</span>
                                 </div>
                                 <div class="detail-action-row">
-                                    <input type="text" id="row_note_${idx}" class="row-note-input" placeholder="İşlem notu (Opsiyonel)">
                                     <div class="detail-action-controls">
-                                        <button class="quick-btn out" onclick="quickAction('${matId}', '${encodedVariant}', 'out', 'row_${idx}', 'row_note_${idx}')">DÜŞ</button>
+                                        <button class="quick-btn out" onclick="quickAction('${matId}', '${encodedVariant}', 'out', 'row_${idx}')">DÜŞ</button>
                                         <div class="row-qty-control"><input type="number" id="row_${idx}" value="1" min="1" class="row-qty-input"></div>
-                                        <button class="quick-btn in" onclick="quickAction('${matId}', '${encodedVariant}', 'in', 'row_${idx}', 'row_note_${idx}')">EKLE</button>
+                                        <button class="quick-btn in" onclick="quickAction('${matId}', '${encodedVariant}', 'in', 'row_${idx}')">EKLE</button>
                                     </div>
                                 </div>
                             </div>
@@ -887,10 +896,10 @@
             }
         };
 
-        window.quickAction = (matId, encodedVariant, type, qtyInputId, noteInputId) => {
+        window.quickAction = (matId, encodedVariant, type, qtyInputId) => {
             const user = document.getElementById('quickUserSelect').value;
             const qty = parseInt(document.getElementById(qtyInputId).value);
-            const note = document.getElementById(noteInputId).value.trim();
+            const note = ""; // Not detaydan kaldırıldı
             if(!user) return alert("Hızlı işlem personeli seçin!");
             if(isNaN(qty) || qty <= 0) return;
             const variantKey = decodeURIComponent(escape(atob(encodedVariant)));
