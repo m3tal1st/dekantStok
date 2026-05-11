@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dekant Medya | Enterprise Stok Yönetimi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #f4f7f6;
+            --bg-card: #ffffff;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary: #64748b;
+            --success: #10b981;
+            --danger: #f43f5e;
+            --text-dark: #0f172a;
+            --text-muted: #475569;
+            --border: #e2e8f0;
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -4px rgba(0,0,0,0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.05);
+        }
+
+        * { box-sizing: border-box; font-family: 'Outfit', sans-serif; margin: 0; padding: 0; }
+
+        body { background-color: var(--bg-body); color: var(--text-dark); padding: 20px 30px; height: 100vh; display: flex; flex-direction: column; overflow: hidden; -webkit-font-smoothing: antialiased;}
+
+        /* --- DEVASA KURUMSAL HEADER --- */
+        .header {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: var(--bg-card); padding: 40px 20px 30px; border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md); margin-bottom: 25px; border-bottom: 5px solid var(--primary);
+            flex-shrink: 0; position: relative;
+        }
+        
+        .brand-subtitle { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 800; color: var(--secondary); letter-spacing: 5px; text-transform: uppercase; margin-bottom: 5px;}
+        .brand-title { 
+            font-size: 54px; font-weight: 900; letter-spacing: -2px;
+            background: linear-gradient(135deg, #0f172a 0%, #2563eb 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-transform: uppercase; line-height: 1;
+        }
+
+        .settings-btn {
+            position: absolute; right: 30px; top: 30px; padding: 14px 24px; background: #f1f5f9;
+            color: var(--text-dark); font-weight: 800; font-size: 15px; border: none; border-radius: var(--radius-sm);
+            cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .settings-btn:hover { background: #e2e8f0; transform: translateY(-2px); }
+
+        /* --- TABS --- */
+        .tabs-wrapper { display: flex; justify-content: center; width: 100%; margin-top: 25px; }
+        .tabs-container {
+            display: inline-flex; gap: 10px; background: var(--bg-body); padding: 8px;
+            border-radius: 50px; border: 1px solid var(--border); overflow-x: auto; scrollbar-width: none;
+        }
+        .tabs-container::-webkit-scrollbar { display: none; }
+        .tab-btn {
+            padding: 16px 36px; font-size: 17px; font-weight: 800; border: none; border-radius: 40px;
+            cursor: pointer; background: transparent; color: var(--text-muted); transition: 0.3s;
+            white-space: nowrap; font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .tab-btn:hover { color: var(--text-dark); }
+        .tab-btn.active { background: var(--bg-card); color: var(--primary); box-shadow: var(--shadow-md); transform: scale(1.02);}
+
+        /* --- ACTION BUTTONS --- */
+        .top-buttons { display: flex; gap: 15px; justify-content: center; margin-bottom: 25px; flex-shrink: 0;}
+        .btn-top { padding: 16px 32px; font-size: 17px; font-weight: 800; border: none; border-radius: 14px; cursor: pointer; transition: 0.2s; color: white; display: flex; align-items: center; gap: 10px; font-family: 'Plus Jakarta Sans', sans-serif;}
+        .btn-action { background-color: var(--primary); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3); }
+        .btn-action:hover { background-color: var(--primary-hover); transform: translateY(-3px); }
+        .btn-history { background-color: var(--text-dark); box-shadow: 0 8px 20px rgba(15, 23, 42, 0.3); }
+        .btn-history:hover { background-color: #000; transform: translateY(-3px); }
+
+        /* --- DASHBOARD GRID --- */
+        .dashboard-wrapper { flex: 1; overflow-y: auto; padding-bottom: 40px; }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .stock-card {
+            background: var(--bg-card); border-radius: var(--radius-lg); padding: 35px; cursor: pointer;
+            box-shadow: var(--shadow-md); border: 1px solid var(--border); transition: 0.3s;
+            display: flex; flex-direction: column; position: relative; overflow: hidden;
+        }
+        .stock-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: var(--primary); }
+        .stock-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
+        .card-title { font-size: 20px; font-weight: 900; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-family: 'Plus Jakarta Sans', sans-serif;}
+        .card-amount { font-size: 64px; font-weight: 900; color: var(--text-dark); margin: 15px 0; line-height: 1; }
+        .card-hint { font-size: 15px; color: var(--primary); font-weight: 800; margin-top: auto; display: flex; align-items: center; gap: 8px;}
+
+        /* --- MODALS GENERAL --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); padding: 20px; }
+        .modal { background: var(--bg-card); width: 100%; max-width: 700px; border-radius: var(--radius-lg); padding: 40px; box-shadow: var(--shadow-lg); position: relative; max-height: 95vh; overflow-y: auto; display: flex; flex-direction: column; animation: fadeUp 0.3s forwards; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .close-btn { position: absolute; top: 25px; right: 30px; font-size: 36px; font-weight: 300; cursor: pointer; color: var(--text-muted); background: var(--bg-body); border: none; width: 50px; height: 50px; border-radius: 50%; display:flex; align-items:center; justify-content:center; transition:0.2s;}
+        .close-btn:hover { color: var(--danger); background: #fee2e2; transform: rotate(90deg);}
+        .modal h2 { font-size: 28px; font-weight: 900; border-bottom: 2px solid var(--bg-body); padding-bottom: 20px; margin-bottom: 30px; color: var(--text-dark); font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.5px;}
+
+        /* --- SETTINGS / BUILDER MODAL --- */
+        .builder-section { background: var(--bg-body); border-radius: var(--radius-md); padding: 25px; margin-bottom: 25px; border: 1px solid var(--border); }
+        .builder-section h3 { font-size: 18px; font-weight: 800; color: var(--primary); margin-bottom: 20px; display:flex; justify-content:space-between; align-items:center;}
+        
+        .input-group { display: flex; gap: 10px; margin-bottom: 15px; }
+        .input-group input, .input-group select { flex: 1; padding: 16px; border: 2px solid var(--border); border-radius: 12px; font-size: 16px; font-weight: 600; outline: none; background: #fff;}
+        .input-group input:focus, .input-group select:focus { border-color: var(--primary); }
+        .btn-add { padding: 16px 24px; background: var(--text-dark); color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.2s;}
+        .btn-add:hover { background: #000; transform: translateY(-2px);}
+        
+        .pill-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        .pill { background: #fff; border: 1px solid var(--border); padding: 8px 16px; border-radius: 30px; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; box-shadow: var(--shadow-sm);}
+        .pill span { cursor: pointer; color: var(--danger); font-size: 18px; font-weight: 900; line-height: 1;}
+        .pill span:hover { transform: scale(1.2); }
+
+        .attr-builder-box { background: #fff; border: 2px dashed var(--border); border-radius: 12px; padding: 20px; margin-bottom: 15px; position:relative;}
+        .attr-builder-box h4 { margin-bottom: 15px; font-size: 16px; font-weight: 800; color: var(--text-dark); }
+        .btn-remove-attr { position: absolute; top: 15px; right: 15px; background: #fee2e2; color: var(--danger); border: none; width: 30px; height: 30px; border-radius: 8px; font-weight: 900; cursor: pointer;}
+        
+        .btn-save-master { width: 100%; padding: 20px; font-size: 18px; font-weight: 900; background: var(--success); color: white; border: none; border-radius: 14px; cursor: pointer; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3); transition: 0.2s; margin-top: 10px;}
+        .btn-save-master:hover { transform: translateY(-3px); background: #059669; }
+
+        /* --- ACTION FORMS (YENİ İŞLEM) --- */
+        .form-label { display: block; font-weight: 800; font-size: 14px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px;}
+        .custom-select { width: 100%; padding: 18px; font-size: 17px; font-weight: 700; color: var(--text-dark); background: var(--bg-body); border: 2px solid var(--border); border-radius: 14px; appearance: none; outline: none; margin-bottom: 20px; cursor: pointer;}
+        .custom-select:focus { border-color: var(--primary); background: #fff;}
+
+        .qty-wrapper { display: flex; align-items: center; gap: 15px; margin-bottom: 30px;}
+        .qty-btn { width: 60px; height: 60px; font-size: 30px; font-weight: bold; background: var(--bg-body); border: 2px solid var(--border); border-radius: 16px; cursor: pointer; color: var(--text-dark); transition:0.2s;}
+        .qty-btn:hover { background: #e2e8f0; }
+        .qty-input { width: 120px; height: 60px; font-size: 26px; font-weight: 900; text-align: center; border: 2px solid var(--border); border-radius: 16px; outline: none; background: #fff;}
+
+        .action-btn-group { display: flex; gap: 15px; }
+        .btn-action-in { flex: 1; padding: 22px; font-size: 18px; font-weight: 900; background: var(--success); color: white; border: none; border-radius: 16px; cursor: pointer; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3); transition: 0.2s;}
+        .btn-action-out { flex: 1; padding: 22px; font-size: 18px; font-weight: 900; background: var(--danger); color: white; border: none; border-radius: 16px; cursor: pointer; box-shadow: 0 8px 20px rgba(244, 63, 94, 0.3); transition: 0.2s;}
+        .btn-action-in:hover, .btn-action-out:hover { transform: translateY(-4px); opacity: 0.9;}
+
+        /* --- TABLES --- */
+        .table-container { overflow-x: auto; border-radius: 16px; border: 1px solid var(--border); background: #fff;}
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { background: var(--bg-body); padding: 20px; font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; text-align: left; border-bottom: 2px solid var(--border); letter-spacing: 0.5px;}
+        td { padding: 20px; border-bottom: 1px solid var(--border); font-size: 17px; font-weight: 600; vertical-align: middle; color: var(--text-dark);}
+        tbody tr:hover { background: #f8fafc; }
+        
+        .status-badge { padding: 8px 16px; border-radius: 30px; font-size: 13px; font-weight: 800; text-transform: uppercase; font-family: 'Plus Jakarta Sans', sans-serif;}
+        .status-in { color: var(--success); background: #d1fae5; }
+        .status-out { color: var(--danger); background: #fee2e2; }
+
+        .quick-action-cell { display: flex; align-items: center; gap: 10px; }
+        .quick-btn { padding: 12px 20px; font-size: 15px; font-weight: 800; color: white; border: none; border-radius: 12px; cursor: pointer; transition: 0.2s; text-transform: uppercase;}
+        .quick-btn.out { background-color: var(--danger); }
+        .quick-btn.in { background-color: var(--success); }
+        .quick-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md);}
+        
+        /* --- BIG CONFIRM BOX --- */
+        .confirm-box { text-align: center; font-size: 24px; line-height: 1.8; color: var(--text-dark); padding: 30px 10px; font-weight: 600;}
+        .highlight { font-size: 28px; font-weight: 900; color: var(--primary); text-transform: uppercase; padding: 4px 12px; background: #e0e7ff; border-radius: 12px; display: inline-block; margin: 4px 0;}
+        .highlight.danger { color: var(--danger); background: #fee2e2; }
+        .highlight.success { color: var(--success); background: #d1fae5; }
+
+        /* Empty States */
+        .empty-state { text-align: center; padding: 80px 20px; color: var(--text-muted); }
+        .empty-state-icon { font-size: 80px; margin-bottom: 20px; opacity: 0.8;}
+        .empty-state-text { font-size: 22px; font-weight: 800; margin-bottom: 30px; color: var(--text-dark);}
+
+        @media (max-width: 900px) {
+            .brand-title { font-size: 38px; }
+            .settings-btn { position: relative; right: auto; top: auto; width: 100%; justify-content: center; margin-top: 15px;}
+            .tabs-wrapper { justify-content: flex-start; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .input-group { flex-direction: column; }
+            .action-btn-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <h2 class="brand-subtitle">Profesyonel Stok Yönetimi</h2>
+        <h1 class="brand-title">Dekant Medya</h1>
+        <button class="settings-btn" onclick="openModal('settingsModal')">⚙️ Sistem & Malzeme Ayarları</button>
+        
+        <div class="tabs-wrapper">
+            <div class="tabs-container" id="tabsContainer">
+                <!-- Javascript ile dinamik gelecek -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ANA BUTONLAR -->
+    <div class="top-buttons">
+        <button class="btn-top btn-action" onclick="openActionModal()">📦 Yeni İşlem Oluştur</button>
+        <button class="btn-top btn-history" onclick="openModal('historyModal')">⏱️ Hareket Geçmişi</button>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="dashboard-wrapper">
+        <div class="dashboard-grid" id="dashboardContainer"></div>
+    </div>
+
+    <!-- MODAL 1: SİSTEM AYARLARI (YENİ MALZEME SİHİRBAZI) -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal" style="max-width: 800px;">
+            <button class="close-btn" onclick="closeModal('settingsModal')">&times;</button>
+            <h2>⚙️ Sistem Kurulumu & Ayarlar</h2>
+            
+            <div class="builder-section">
+                <h3>1. Personel Yönetimi</h3>
+                <div class="input-group">
+                    <input type="text" id="newUserInput" placeholder="Yeni personel adı yazın...">
+                    <button class="btn-add" onclick="addSimpleItem('users', 'newUserInput')">Ekle</button>
+                </div>
+                <div class="pill-container" id="settingsUsersList"></div>
+            </div>
+
+            <div class="builder-section">
+                <h3>2. Bölüm (Departman) Yönetimi</h3>
+                <div class="input-group">
+                    <input type="text" id="newDepInput" placeholder="Örn: Baskı, Plotter, Depo...">
+                    <button class="btn-add" onclick="addDepartment()">Bölüm Ekle</button>
+                </div>
+                <div class="pill-container" id="settingsDepsList"></div>
+            </div>
+
+            <div class="builder-section" style="border-color: var(--primary); background: #fff;">
+                <h3>3. Özel Malzeme Yaratıcısı <span style="font-size:13px; color:var(--text-muted); font-weight:600;">(Yeni Ürün Tanımla)</span></h3>
+                
+                <div class="input-group">
+                    <select id="builderDepSelect"><option value="">-- Bölüm Seçin --</option></select>
+                    <input type="text" id="builderMatName" placeholder="Malzeme Adı (Örn: Çift Taraflı Bant)">
+                </div>
+
+                <div style="background: var(--bg-body); padding: 20px; border-radius: 12px; margin-top: 15px;">
+                    <h4 style="margin-bottom: 15px; font-weight:800; font-size:15px; color:var(--text-dark);">Malzemeye Ait Nitelikler (Zorunlu Değil)</h4>
+                    <div class="input-group">
+                        <input type="text" id="builderAttrName" placeholder="Özellik Başlığı (Örn: Uzunluk, Renk, Kalınlık)">
+                        <button class="btn-add" style="background:var(--primary);" onclick="addTempAttribute()">Başlık Ekle</button>
+                    </div>
+                    
+                    <div id="builderAttrContainer">
+                        <!-- Dinamik özellik kutuları buraya gelecek -->
+                    </div>
+                </div>
+
+                <button class="btn-save-master" onclick="saveNewMaterial()">✅ MALZEMEYİ VERİTABANINA KAYDET</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: YENİ İŞLEM -->
+    <div class="modal-overlay" id="actionModal">
+        <div class="modal">
+            <button class="close-btn" onclick="closeModal('actionModal')">&times;</button>
+            <h2 id="actionModalTitle">📦 Yeni İşlem</h2>
+            
+            <label class="form-label">İşlemi Yapan Personel</label>
+            <select id="actionUserSelect" class="custom-select"></select>
+
+            <label class="form-label">Malzeme Seçimi</label>
+            <select id="actionMatSelect" class="custom-select" onchange="renderActionAttributes()"></select>
+
+            <div id="actionDynamicArea">
+                <!-- Malzemenin özel nitelik dropdown'ları buraya gelecek -->
+            </div>
+
+            <label class="form-label" style="margin-top: 10px;">İŞLEM MİKTARI / BİRİM</label>
+            <div class="qty-wrapper">
+                <button class="qty-btn" onclick="changeQty('actionQty', -1)">-</button>
+                <input type="number" id="actionQty" class="qty-input" value="1" min="1">
+                <button class="qty-btn" onclick="changeQty('actionQty', 1)">+</button>
+            </div>
+
+            <div class="action-btn-group">
+                <button class="btn-action-in" onclick="processTransaction('in')">⬇️ STOĞA EKLE</button>
+                <button class="btn-action-out" onclick="processTransaction('out')">⬆️ STOKTAN DÜŞ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: DETAYLI STOK -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal" style="max-width: 1200px;">
+            <button class="close-btn" onclick="closeModal('detailModal')">&times;</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 30px; padding-right: 60px;">
+                <h2 id="detailModalTitle" style="margin:0; padding:0; border:none; color:var(--primary); font-size:32px;">Detay</h2>
+                <button class="btn-top btn-action" style="padding:14px 24px; font-size:15px;" onclick="jumpToActionModal()">➕ İşlem Ekle</button>
+            </div>
+
+            <div id="quickUserContainer" style="background:#f8fafc; padding:25px; border-radius:16px; border:2px solid var(--border); margin-bottom:25px; display:none;">
+                <label class="form-label" style="margin-bottom:10px;">Hızlı İşlem Yapacak Personel:</label>
+                <select id="quickUserSelect" class="custom-select" style="margin:0;"></select>
+            </div>
+
+            <div class="table-container" id="detailTableContainer" style="box-shadow: var(--shadow-md); border:none;">
+                <table id="detailTable">
+                    <thead id="detailTableHead"></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: GEÇMİŞ -->
+    <div class="modal-overlay" id="historyModal">
+        <div class="modal" style="max-width: 1000px;">
+            <button class="close-btn" onclick="closeModal('historyModal')">&times;</button>
+            <h2>⏱️ Hareket Geçmişi</h2>
+            
+            <div style="display:flex; gap:15px; margin-bottom:25px;">
+                <select id="logDateFilter" onchange="filterLogs()" class="custom-select" style="flex:1; margin:0;">
+                    <option value="all">Tüm Zamanlar</option>
+                    <option value="today">Bugün</option>
+                    <option value="month">Bu Ay</option>
+                    <option value="year">Bu Yıl</option>
+                </select>
+                <input type="text" id="logSearchInput" placeholder="Personel veya malzeme ara..." onkeyup="filterLogs()" class="custom-select" style="flex:2; margin:0; background:#fff;">
+            </div>
+
+            <div class="table-container">
+                <table id="logTable">
+                    <thead><tr><th>Tarih</th><th>Personel</th><th>Detay</th><th style="text-align:right;">Durum</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 5: ONAY -->
+    <div class="modal-overlay" id="confirmModal" style="z-index: 2000;">
+        <div class="modal" style="max-width: 800px; padding: 50px;">
+            <div class="confirm-box" id="confirmText"></div>
+            <div style="display: flex; gap: 20px; margin-top: 40px;">
+                <button onclick="closeModal('confirmModal')" style="flex:1; padding:24px; border-radius:16px; border:none; cursor:pointer; background:var(--border); color:var(--text-dark); font-weight:900; font-size:20px; transition:0.2s;">İPTAL ET</button>
+                <button id="executeBtn" style="flex:1; padding:24px; border-radius:16px; border:none; cursor:pointer; background:var(--primary); color:white; font-weight:900; font-size:20px; box-shadow: 0 8px 20px rgba(37,99,235,0.4); transition:0.2s;">EVET, ONAYLIYORUM</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIREBASE SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set, onValue, push, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAKr3S4Yiz9raVzQxUXp0sLg9S69MwIZN4",
+            authDomain: "dekastok-6a3a5.firebaseapp.com",
+            databaseURL: "https://dekastok-6a3a5-default-rtdb.europe-west1.firebasedatabase.app/",
+            projectId: "dekastok-6a3a5",
+            storageBucket: "dekastok-6a3a5.firebasestorage.app",
+            messagingSenderId: "840760282090",
+            appId: "1:840760282090:web:4ffd9e3345aa1e4ea38093"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // --- GLOBAL DEĞİŞKENLER ---
+        let dbData = { users: {}, departments: {}, materials: {} };
+        let dbStock = {};
+        let dbLogs = [];
+        let activeTabId = null;
+        let tempAttributes = []; // Builder için geçici dizi
+        let pendingTx = null; // Onay bekleyen işlem
+        let currentDetailMatId = null; // Detay modalı açık olan malzeme
+
+        // --- VERİTABANI DİNLEME (v12 TERTEMİZ YAPI) ---
+        onValue(ref(db, 'db_v12/config'), (snapshot) => {
+            if (snapshot.exists()) {
+                dbData = snapshot.val();
+                if(!dbData.users) dbData.users = {};
+                if(!dbData.departments) dbData.departments = {};
+                if(!dbData.materials) dbData.materials = {};
+            } else {
+                dbData = { users: {}, departments: {}, materials: {} };
+            }
+            renderUI();
+        });
+
+        onValue(ref(db, 'db_v12/stock'), (snapshot) => { 
+            dbStock = snapshot.val() || {}; 
+            renderDashboard();
+            if(document.getElementById('detailModal').style.display === 'flex' && currentDetailMatId) {
+                renderDetailModal(currentDetailMatId);
+            }
+        });
+
+        onValue(ref(db, 'db_v12/logs'), (snapshot) => { 
+            const data = snapshot.val() || {}; 
+            dbLogs = Object.values(data).reverse(); 
+            if(document.getElementById('historyModal').style.display === 'flex') filterLogs(); 
+        });
+
+        // --- UI RENDER (TABS & DASHBOARD) ---
+        function renderUI() {
+            renderTabs();
+            renderSettingsData();
+        }
+
+        function renderTabs() {
+            const tabsContainer = document.getElementById('tabsContainer');
+            tabsContainer.innerHTML = '';
+            const deps = Object.entries(dbData.departments);
+            
+            if (deps.length === 0) {
+                tabsContainer.innerHTML = `<span style="padding:15px; color:var(--text-muted); font-weight:700;">Lütfen Sistem Ayarlarından Bölüm Ekleyin.</span>`;
+                document.getElementById('dashboardContainer').innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <div class="empty-state-icon">⚙️</div>
+                        <div class="empty-state-text">Sistem henüz kurulmadı.</div>
+                        <button class="btn-top btn-action" style="margin: 0 auto;" onclick="openModal('settingsModal')">Hemen Kuruluma Başla</button>
+                    </div>`;
+                return;
+            }
+
+            if(!activeTabId || !dbData.departments[activeTabId]) activeTabId = deps[0][0];
+
+            deps.forEach(([id, name]) => {
+                const btn = document.createElement('button');
+                btn.className = `tab-btn ${id === activeTabId ? 'active' : ''}`;
+                btn.innerText = name.toUpperCase();
+                btn.onclick = () => { activeTabId = id; renderTabs(); renderDashboard(); };
+                tabsContainer.appendChild(btn);
+            });
+            renderDashboard();
+        }
+
+        window.renderDashboard = function() {
+            if(!activeTabId || !dbData.departments[activeTabId]) return;
+            const container = document.getElementById('dashboardContainer');
+            container.innerHTML = '';
+
+            const materials = Object.entries(dbData.materials).filter(([_, mat]) => mat.depId === activeTabId);
+
+            if (materials.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <div class="empty-state-icon">📦</div>
+                        <div class="empty-state-text">Bu bölümde henüz malzeme yok.</div>
+                        <button class="btn-top btn-action" style="margin: 0 auto; background:var(--text-dark);" onclick="openModal('settingsModal')">Yeni Malzeme Yarat</button>
+                    </div>`;
+                return;
+            }
+
+            materials.forEach(([matId, mat]) => {
+                let total = 0;
+                if (dbStock[matId]) { Object.values(dbStock[matId]).forEach(q => total += q); }
+                container.innerHTML += `
+                    <div class="stock-card" onclick="openDetailModal('${matId}')">
+                        <div class="card-title">${mat.name}</div>
+                        <div class="card-amount">${total}</div>
+                        <div class="card-hint">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            Detayları & Stokları Yönet
+                        </div>
+                    </div>
+                `;
+            });
+        };
+
+        // --- SİSTEM AYARLARI (BUILDER) ---
+        window.renderSettingsData = function() {
+            // Users
+            const uCont = document.getElementById('settingsUsersList');
+            uCont.innerHTML = '';
+            Object.entries(dbData.users).forEach(([id, name]) => {
+                uCont.innerHTML += `<div class="pill">${name} <span onclick="deleteDbNode('config/users/${id}')">&times;</span></div>`;
+            });
+
+            // Departments
+            const dCont = document.getElementById('settingsDepsList');
+            const dSelect = document.getElementById('builderDepSelect');
+            dCont.innerHTML = ''; dSelect.innerHTML = '<option value="">-- Hangi Bölüme Eklenecek? --</option>';
+            Object.entries(dbData.departments).forEach(([id, name]) => {
+                dCont.innerHTML += `<div class="pill" style="border-color:var(--primary);">${name} <span onclick="deleteDbNode('config/departments/${id}')">&times;</span></div>`;
+                dSelect.innerHTML += `<option value="${id}">${name.toUpperCase()}</option>`;
+            });
+        };
+
+        window.addSimpleItem = (node, inputId) => {
+            const val = document.getElementById(inputId).value.trim();
+            if(!val) return;
+            push(ref(db, `db_v12/config/${node}`), val);
+            document.getElementById(inputId).value = '';
+        };
+
+        window.addDepartment = () => addSimpleItem('departments', 'newDepInput');
+
+        window.deleteDbNode = (path) => {
+            if(confirm("Silmek istediğinize emin misiniz?")) remove(ref(db, `db_v12/${path}`));
+        };
+
+        // --- DİNAMİK NİTELİK OLUŞTURUCU (ATTR BUILDER) ---
+        window.addTempAttribute = () => {
+            const name = document.getElementById('builderAttrName').value.trim();
+            if(!name) return;
+            tempAttributes.push({ name: name, options: [] });
+            document.getElementById('builderAttrName').value = '';
+            renderTempAttributes();
+        };
+
+        window.removeTempAttr = (index) => { tempAttributes.splice(index, 1); renderTempAttributes(); };
+
+        window.addTempOption = (attrIndex) => {
+            const val = document.getElementById(`optInput_${attrIndex}`).value.trim();
+            if(!val) return;
+            if(!tempAttributes[attrIndex].options.includes(val)) tempAttributes[attrIndex].options.push(val);
+            renderTempAttributes();
+        };
+
+        window.removeTempOption = (attrIndex, optIndex) => { tempAttributes[attrIndex].options.splice(optIndex, 1); renderTempAttributes(); };
+
+        function renderTempAttributes() {
+            const cont = document.getElementById('builderAttrContainer');
+            cont.innerHTML = '';
+            tempAttributes.forEach((attr, i) => {
+                let pills = attr.options.map((opt, j) => `<div class="pill">${opt} <span onclick="removeTempOption(${i}, ${j})">&times;</span></div>`).join('');
+                cont.innerHTML += `
+                    <div class="attr-builder-box">
+                        <h4>🏷️ ${attr.name.toUpperCase()}</h4>
+                        <button class="btn-remove-attr" onclick="removeTempAttr(${i})">&times;</button>
+                        <div class="input-group" style="margin-bottom:10px;">
+                            <input type="text" id="optInput_${i}" placeholder="Seçenek (Örn: Kırmızı, 10m)">
+                            <button class="btn-add" onclick="addTempOption(${i})">Seçenek Ekle</button>
+                        </div>
+                        <div class="pill-container">${pills}</div>
+                    </div>
+                `;
+            });
+        }
+
+        window.saveNewMaterial = () => {
+            const depId = document.getElementById('builderDepSelect').value;
+            const matName = document.getElementById('builderMatName').value.trim();
+            if(!depId || !matName) return alert("Lütfen Bölüm seçin ve Malzeme adı yazın!");
+
+            const newMat = { depId: depId, name: matName, attributes: tempAttributes };
+            push(ref(db, 'db_v12/config/materials'), newMat);
+
+            // Formu Temizle
+            document.getElementById('builderDepSelect').value = '';
+            document.getElementById('builderMatName').value = '';
+            tempAttributes = []; renderTempAttributes();
+            alert("Malzeme başarıyla yaratıldı!");
+            closeModal('settingsModal');
+        };
+
+        // --- YENİ İŞLEM MODALI (AKILLI FORM) ---
+        window.openActionModal = () => {
+            if(!activeTabId) return alert("Önce bölüm ayarlamalısınız.");
+            document.getElementById('actionModalTitle').innerText = `📦 Yeni İşlem - ${dbData.departments[activeTabId]}`;
+            
+            // Personel Doldur
+            const uSel = document.getElementById('actionUserSelect');
+            uSel.innerHTML = '<option value="">-- Personel Seçin --</option>';
+            Object.values(dbData.users).forEach(u => uSel.innerHTML += `<option value="${u}">${u}</option>`);
+
+            // Malzeme Doldur (Sadece Aktif Bölümdekiler)
+            const mSel = document.getElementById('actionMatSelect');
+            mSel.innerHTML = '<option value="">-- Malzeme Seçin --</option>';
+            Object.entries(dbData.materials).filter(([_, m]) => m.depId === activeTabId).forEach(([id, m]) => {
+                mSel.innerHTML += `<option value="${id}">${m.name.toUpperCase()}</option>`;
+            });
+
+            document.getElementById('actionDynamicArea').innerHTML = '';
+            document.getElementById('actionQty').value = 1;
+            openModal('actionModal');
+        };
+
+        window.renderActionAttributes = () => {
+            const matId = document.getElementById('actionMatSelect').value;
+            const area = document.getElementById('actionDynamicArea');
+            area.innerHTML = '';
+            if(!matId || !dbData.materials[matId].attributes) return;
+
+            dbData.materials[matId].attributes.forEach((attr, idx) => {
+                let opts = attr.options.map(o => `<option value="${o}">${o}</option>`).join('');
+                area.innerHTML += `
+                    <label class="form-label">${attr.name}</label>
+                    <select id="dynAttr_${idx}" class="custom-select dyn-select">
+                        <option value="">-- Seçiniz --</option>
+                        ${opts}
+                    </select>
+                `;
+            });
+        };
+
+        window.processTransaction = (type) => {
+            const user = document.getElementById('actionUserSelect').value;
+            const matId = document.getElementById('actionMatSelect').value;
+            const qty = parseInt(document.getElementById('actionQty').value);
+
+            if(!user || !matId || isNaN(qty) || qty <= 0) return alert("Personel, Malzeme ve Miktar zorunludur!");
+
+            const mat = dbData.materials[matId];
+            let variantParts = [];
+            let missingAttr = false;
+
+            if (mat.attributes) {
+                mat.attributes.forEach((_, idx) => {
+                    const val = document.getElementById(`dynAttr_${idx}`).value;
+                    if(!val) missingAttr = true;
+                    variantParts.push(val);
+                });
+            }
+
+            if(missingAttr) return alert("Lütfen malzemenin tüm alt niteliklerini seçin!");
+
+            const variantKey = variantParts.length > 0 ? variantParts.join(' | ') : 'Standart';
+            confirmTx(user, matId, mat.name, variantKey, type, qty, 'main');
+        };
+
+        // --- ONAY VE LOG MEKANİZMASI ---
+        function confirmTx(user, matId, matName, variant, type, qty, source) {
+            const islem = type === 'in' ? `<span class="highlight success">STOĞA EKLİYOR</span>` : `<span class="highlight danger">STOKTAN DÜŞÜYOR</span>`;
+            let vHtml = variant !== 'Standart' ? variant.split(' | ').map(v => `<span class="highlight">${v}</span>`).join(' ') + '<br>' : '';
+
+            document.getElementById('confirmText').innerHTML = `
+                <span class="highlight">${user}</span> adlı personel,<br><br>
+                ${vHtml}
+                <span class="highlight">${qty} BİRİM</span> 
+                <span class="highlight">${matName.toUpperCase()}</span> malzemeyi ${islem}. 
+                <br><br><strong>Onaylıyor musunuz?</strong>
+            `;
+            pendingTx = { user, matId, matName, variant, type, qty, source };
+            openModal('confirmModal');
+        }
+
+        document.getElementById('executeBtn').onclick = () => {
+            if(!pendingTx) return;
+            const { user, matId, matName, variant, type, qty, source } = pendingTx;
+            const safeVar = variant.replace(/\./g, '_');
+
+            const current = (dbStock[matId] && dbStock[matId][safeVar]) || 0;
+            const newQty = type === 'in' ? current + qty : current - qty;
+
+            if (type === 'out' && newQty < 0) {
+                if(!confirm("Dikkat: Stok eksiye düşecek. Devam edilsin mi?")) { closeModal('confirmModal'); return; }
+            }
+
+            set(ref(db, `db_v12/stock/${matId}/${safeVar}`), newQty);
+
+            const now = new Date();
+            const timeStr = now.toLocaleDateString('tr-TR') + " " + now.toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
+            
+            push(ref(db, 'db_v12/logs'), {
+                time: timeStr, user: user,
+                detail: `<b>${matName.toUpperCase()}</b> <br><span class="log-detail">${variant} | ${qty} Birim</span>`,
+                status: type === 'in' ? 'Giriş' : 'Çıkış'
+            });
+
+            closeModal('confirmModal');
+            if(source === 'main') closeModal('actionModal');
+            pendingTx = null;
+        };
+
+        // --- DETAYLI STOK MODALI ---
+        window.openDetailModal = (matId) => {
+            currentDetailMatId = matId;
+            renderDetailModal(matId);
+            openModal('detailModal');
+        };
+
+        window.jumpToActionModal = () => {
+            closeModal('detailModal');
+            openActionModal();
+            document.getElementById('actionMatSelect').value = currentDetailMatId;
+            renderActionAttributes();
+        };
+
+        function renderDetailModal(matId) {
+            const mat = dbData.materials[matId];
+            if(!mat) return;
+
+            document.getElementById('detailModalTitle').innerText = `📦 ${mat.name.toUpperCase()}`;
+            
+            const qUserSel = document.getElementById('quickUserSelect');
+            qUserSel.innerHTML = '<option value="">-- Hızlı İşlem İçin Personel Seçin --</option>';
+            Object.values(dbData.users).forEach(u => qUserSel.innerHTML += `<option value="${u}">${u}</option>`);
+
+            const thead = document.getElementById('detailTableHead');
+            const tbody = document.querySelector('#detailTable tbody');
+            tbody.innerHTML = '';
+            
+            // Dinamik Başlıklar
+            let tHeadHtml = '<tr>';
+            if (mat.attributes && mat.attributes.length > 0) {
+                mat.attributes.forEach(a => tHeadHtml += `<th>${a.name}</th>`);
+            } else {
+                tHeadHtml += `<th>Detay</th>`;
+            }
+            tHeadHtml += `<th style="text-align:center;">Stok</th><th style="text-align:center;">İşlem</th></tr>`;
+            thead.innerHTML = tHeadHtml;
+
+            let hasItems = false;
+            if (dbStock[matId]) {
+                Object.entries(dbStock[matId]).forEach(([key, qty], idx) => {
+                    if (qty !== 0) {
+                        hasItems = true;
+                        const vKey = key.replace(/_/g, '.');
+                        const p = vKey.split(' | ');
+                        const encodedVar = btoa(unescape(encodeURIComponent(vKey)));
+                        
+                        let tdHtml = '';
+                        if (mat.attributes && mat.attributes.length > 0) {
+                            p.forEach(val => tdHtml += `<td><strong>${val}</strong></td>`);
+                        } else {
+                            tdHtml += `<td><strong>${vKey}</strong></td>`;
+                        }
+
+                        tbody.innerHTML += `
+                            <tr>
+                                ${tdHtml}
+                                <td style="text-align:center; font-size:32px; font-weight:900; color:var(--primary);">${qty}</td>
+                                <td>
+                                    <div class="quick-action-cell">
+                                        <button class="quick-btn out" onclick="quickAction('${matId}', '${encodedVariant}', 'out', 'row_${idx}')">Düş</button>
+                                        <div class="row-qty-control"><input type="number" id="row_${idx}" value="1" min="1" class="row-qty-input"></div>
+                                        <button class="quick-btn in" onclick="quickAction('${matId}', '${encodedVariant}', 'in', 'row_${idx}')">Ekle</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    }
+                });
+            }
+
+            const qUserCont = document.getElementById('quickUserContainer');
+            if (!hasItems) {
+                qUserCont.style.display = 'none'; thead.style.display = 'none';
+                tbody.innerHTML = `<tr><td colspan="10" class="empty-state">
+                    <div class="empty-state-icon">📭</div><div class="empty-state-text">Stok kaydı yok.</div>
+                    <button class="btn-top btn-action" style="margin:0 auto;" onclick="jumpToActionModal()">➕ Yeni İşlem Ekle</button>
+                </td></tr>`;
+            } else {
+                qUserCont.style.display = 'block'; thead.style.display = 'table-header-group';
+            }
+        }
+
+        window.quickAction = (matId, encodedVariant, type, inputId) => {
+            const user = document.getElementById('quickUserSelect').value;
+            const qty = parseInt(document.getElementById(inputId).value);
+            if(!user) return alert("Lütfen Personel seçin!");
+            if(isNaN(qty) || qty <= 0) return;
+            const variantKey = decodeURIComponent(escape(atob(encodedVariant)));
+            const matName = dbData.materials[matId].name;
+            confirmTx(user, matId, matName, variantKey, type, qty, 'detail');
+        };
+
+        // --- GEÇMİŞ ---
+        window.filterLogs = () => {
+            const search = document.getElementById('logSearchInput').value.toLowerCase();
+            const dateF = document.getElementById('logDateFilter').value;
+            const tbody = document.querySelector('#logTable tbody');
+            tbody.innerHTML = '';
+            
+            const now = new Date();
+            const todayStr = now.toLocaleDateString('tr-TR'); const monthStr = todayStr.substring(3); const yearStr = todayStr.substring(6); 
+
+            dbLogs.forEach(log => {
+                const logDate = log.time.split(' ')[0];
+                if(dateF === 'today' && logDate !== todayStr) return;
+                if(dateF === 'month' && !logDate.endsWith(monthStr)) return;
+                if(dateF === 'year' && !logDate.endsWith(yearStr)) return;
+
+                const plainRow = (log.user + ' ' + log.detail.replace(/<[^>]*>?/gm, '')).toLowerCase();
+                if(!plainRow.includes(search)) return;
+
+                const statusClass = log.status === 'Giriş' ? 'status-in' : 'status-out';
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${log.time.split(' ')[0]}</strong><br><span style="color:var(--text-muted); font-size:13px; font-weight:700;">${log.time.split(' ')[1]}</span></td>
+                        <td style="font-weight:900; font-size:16px; color:var(--text-dark);">${log.user}</td>
+                        <td style="font-size:16px;">${log.detail}</td>
+                        <td style="text-align:right;"><span class="status-badge ${statusClass}">${log.status}</span></td>
+                    </tr>
+                `;
+            });
+
+            if(tbody.innerHTML === '') tbody.innerHTML = `<tr><td colspan="4" class="empty-state">Bulunamadı.</td></tr>`;
+        };
+
+        window.changeQty = (id, amt) => { const el = document.getElementById(id); let v = parseInt(el.value)+amt; el.value = v < 1 ? 1 : v; };
+        window.openModal = (id) => { document.getElementById(id).style.display = 'flex'; if(id === 'historyModal') filterLogs(); if(id === 'settingsModal') tempAttributes = []; renderTempAttributes(); };
+        window.closeModal = (id) => { document.getElementById(id).style.display = 'none'; if(id === 'detailModal') currentDetailMatId = null; };
+
+    </script>
+</body>
+</html>
