@@ -2,16 +2,15 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <!-- ZOOM KİLİDİ BURADAN KALDIRILDI -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dekant Medya | Enterprise Stok Yönetimi</title>
     <!-- Modern ve Kurumsal Fontlar -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-body: #fdf2f2; 
+            --bg-body: #fdf2f2;
             --bg-card: #ffffff;
-            --primary: #dc2626; 
+            --primary: #dc2626;
             --primary-hover: #b91c1c;
             --primary-light: #fef2f2;
             --secondary: #64748b;
@@ -76,7 +75,7 @@
         .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4); transform: scale(1.03);}
 
         .top-buttons { display: flex; gap: 20px; justify-content: center; margin-bottom: 30px; flex-shrink: 0;}
-        .btn-top { padding: 18px 36px; font-size: 18px; font-weight: 800; border: none; border-radius: 16px; cursor: pointer; transition: 0.2s; color: white; display: flex; align-items: center; gap: 10px; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.5px;}
+        .btn-top { padding: 18px 36px; font-size: 18px; font-weight: 800; border: none; border-radius: 16px; cursor: pointer; transition: 0.2s; color: white; display: flex; align-items: center; justify-content: center; gap: 10px; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.5px;}
         .btn-action { background-color: var(--primary); box-shadow: 0 8px 25px rgba(220, 38, 38, 0.35); }
         .btn-action:hover { background-color: var(--primary-hover); transform: translateY(-4px); box-shadow: 0 12px 30px rgba(220, 38, 38, 0.45);}
         .btn-history { background-color: var(--text-dark); box-shadow: 0 8px 25px rgba(15, 23, 42, 0.3); }
@@ -100,7 +99,7 @@
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(69, 10, 10, 0.8); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(10px); padding: 20px; }
         .modal { background: var(--bg-card); width: 100%; max-width: 750px; border-radius: var(--radius-lg); padding: 45px; box-shadow: var(--shadow-lg); position: relative; max-height: 95vh; overflow-y: auto; display: flex; flex-direction: column; -webkit-overflow-scrolling: touch; animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(40px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        .close-btn { position: absolute; top: 30px; right: 35px; font-size: 36px; font-weight: 300; cursor: pointer; color: var(--text-muted); background: var(--bg-body); border: none; width: 55px; height: 55px; border-radius: 50%; display:flex; align-items:center; justify-content:center; transition:0.2s;}
+        .close-btn { position: absolute; top: 30px; right: 35px; font-size: 36px; font-weight: 300; cursor: pointer; color: var(--text-muted); background: var(--bg-body); border: none; width: 55px; height: 55px; border-radius: 50%; display:flex; align-items:center; justify-content:center; transition:0.2s; z-index: 10;}
         .close-btn:hover { color: var(--danger); background: #fee2e2; transform: rotate(90deg);}
         .modal h2 { font-size: 32px; font-weight: 900; border-bottom: 3px solid var(--bg-body); padding-bottom: 20px; margin-bottom: 35px; color: var(--text-dark); font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -1px; flex-shrink: 0;}
 
@@ -154,7 +153,7 @@
         .status-badge { padding: 10px 18px; border-radius: 30px; font-size: 14px; font-weight: 900; text-transform: uppercase;}
         .status-in { color: var(--success); background: #d1fae5; }
         .status-out { color: var(--danger); background: #fee2e2; }
-        .quick-action-cell { display: flex; align-items: center; gap: 12px; justify-content: flex-start;}
+        .quick-action-cell { display: flex; align-items: center; gap: 12px; justify-content: flex-start; flex-wrap: wrap;}
         .quick-btn { padding: 14px 22px; font-size: 16px; font-weight: 900; color: white; border: none; border-radius: 14px; cursor: pointer; text-transform: uppercase;}
         .quick-btn.out { background-color: var(--danger); }
         .quick-btn.in { background-color: var(--success); }
@@ -193,78 +192,102 @@
             .card-amount { font-size: 56px; }
         }
 
+        /* 
+           GERÇEK MOBİL (TELEFON) İÇİN KİBAR, APP-BENZERİ TASARIM
+           Tüm boşluklar, fontlar ve paddingler minimalize edildi!
+        */
         @media (max-width: 600px) {
-            body { padding: 10px; }
-            .header { padding: 25px 15px 20px; margin-bottom: 15px; border-width: 4px; border-radius: 20px;}
+            body { padding: 8px; height: 100dvh; }
+            
+            .header { padding: 20px 10px 15px; margin-bottom: 15px; border-bottom-width: 4px; border-radius: 18px;}
             .brand-title { font-size: 38px; letter-spacing: -1px; }
-            .brand-subtitle { font-size: 12px; letter-spacing: 2px; }
-            
-            .tabs-wrapper { margin-top: 15px; }
-            .tabs-container { padding: 6px; border-radius: 40px; gap: 5px; }
-            .tab-btn { padding: 12px 20px; font-size: 14px; }
+            .brand-subtitle { font-size: 11px; letter-spacing: 2px; margin-bottom: 2px;}
+            .settings-btn { padding: 10px 15px; font-size: 13px; margin-top: 15px; width: auto;}
 
-            .top-buttons { flex-direction: column; gap: 10px; margin-bottom: 20px; }
-            .btn-top { width: 100%; justify-content: center; padding: 16px; font-size: 16px; }
+            .tabs-wrapper { margin-top: 15px; }
+            .tabs-container { padding: 5px; border-radius: 40px; gap: 5px; }
+            .tab-btn { padding: 10px 18px; font-size: 13px; border-radius: 20px;}
+
+            /* Top Butonlar Yan Yana (Çok daha kibar) */
+            .top-buttons { flex-direction: row; gap: 8px; margin-bottom: 15px; }
+            .btn-top { width: 50%; padding: 12px 10px; font-size: 13px; justify-content: center; border-radius: 12px;}
             
+            /* Dashboard 2 Kolon! */
             .dashboard-wrapper { padding-bottom: 20px; }
-            .dashboard-grid { grid-template-columns: 1fr; gap: 15px; }
-            .stock-card { border-radius: 18px; padding: 25px 20px; }
-            .card-amount { font-size: 48px; margin: 10px 0; }
-            .card-hint { font-size: 14px; }
+            .dashboard-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .stock-card { border-radius: 14px; padding: 15px; border-width: 1px; }
+            .card-title { font-size: 13px; letter-spacing: 0; }
+            .card-amount { font-size: 36px; margin: 8px 0; }
+            .card-hint { font-size: 10px; gap: 4px;}
+            .card-hint svg { width: 14px; height: 14px; }
 
             /* MODAL - BOTTOM SHEET TASARIMI (NATIVE APP GİBİ) */
             .modal-overlay { padding: 0; align-items: flex-end; }
             .modal { 
-                max-width: 100%; width: 100%; border-radius: 30px 30px 0 0; 
-                padding: 30px 20px 20px; max-height: 92vh; /* fallback */
-                max-height: 92dvh;
-                animation: slideUpMobile 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                max-width: 100%; width: 100%; border-radius: 24px 24px 0 0; 
+                padding: 25px 15px 15px; max-height: 90dvh;
             }
-            @keyframes slideUpMobile { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+            .close-btn { top: 12px; right: 15px; width: 35px; height: 35px; font-size: 24px; }
+            .modal h2 { font-size: 20px; margin-bottom: 20px; padding-bottom: 10px; margin-top:0;}
             
-            .close-btn { top: 15px; right: 15px; width: 45px; height: 45px; font-size: 32px; background: var(--border); color: var(--text-dark); }
-            .modal h2 { font-size: 24px; margin-top: 10px; margin-bottom: 20px; padding-bottom: 15px;}
-            
-            /* Formlar Mobilde 16px olmazsa iPhone Zoom yapar! */
-            .form-label { font-size: 13px; margin-bottom: 6px; }
+            /* Formlar Mobilde 16px olmazsa iPhone Zoom yapar! (16px kilit) */
+            .form-label { font-size: 12px; margin-bottom: 6px; }
             .custom-select, .note-input, .input-group input, .input-group select, .dyn-new-input { 
-                padding: 15px; font-size: 16px; border-radius: 14px; margin-bottom: 15px; 
+                padding: 12px 12px; font-size: 16px; border-radius: 12px; margin-bottom: 15px; border-width: 2px;
             }
             
+            /* Miktar Butonları */
             .qty-wrapper { margin-bottom: 20px; justify-content: center; gap: 10px;}
-            .qty-btn { width: 55px; height: 55px; font-size: 28px; border-radius: 14px; }
-            .qty-input { width: 100px; height: 55px; font-size: 24px; border-radius: 14px; }
+            .qty-btn { width: 45px; height: 45px; font-size: 24px; border-radius: 12px; }
+            .qty-input { width: 80px; height: 45px; font-size: 20px; border-radius: 12px; }
             
-            .action-btn-group { flex-direction: column; gap: 10px; }
-            .btn-action-in, .btn-action-out { padding: 18px; font-size: 18px; border-radius: 14px; width: 100%; }
+            /* İşlem Butonları Yan Yana */
+            .action-btn-group { flex-direction: row; gap: 8px; }
+            .btn-action-in, .btn-action-out { padding: 15px 10px; font-size: 14px; border-radius: 12px; width: 50%; }
 
             /* Settings Mobile */
-            .builder-section { padding: 20px 15px; margin-bottom: 20px; border-radius: 14px; }
-            .builder-section h3 { font-size: 16px; flex-direction: column; align-items: flex-start; gap: 10px; }
-            .input-group { flex-direction: column; gap: 10px; }
-            .btn-add { width: 100%; padding: 15px; font-size: 16px; }
-            .pill { padding: 8px 14px; font-size: 14px; }
-            .pill span { font-size: 18px; }
+            .builder-section { padding: 15px; margin-bottom: 15px; border-radius: 12px; }
+            .builder-section h3 { font-size: 15px; flex-direction: column; align-items: flex-start; gap: 10px; }
+            .input-group { flex-direction: column; gap: 8px; }
+            .btn-add { width: 100%; padding: 12px; font-size: 14px; }
+            .pill { padding: 6px 12px; font-size: 13px; }
+            .pill span { font-size: 16px; }
+            .attr-builder-box { padding: 15px; border-radius: 10px;}
+            .attr-title-input { font-size: 15px; width: 70%;}
+            .btn-save-master, .btn-delete-master { padding: 15px; font-size: 15px; border-radius: 12px; margin-top: 10px;}
+
+            /* Table & Details Mobile (Kibar görünüm) */
+            .table-container { border-radius: 12px; border-width: 1px;}
+            th { padding: 10px 8px; font-size: 11px; }
+            td { padding: 12px 8px; font-size: 13px; }
             
-            /* Table & Details Mobile */
-            .table-container { border-radius: 14px; border-width: 1px;}
-            th, td { padding: 14px; font-size: 15px; }
-            .quick-action-cell { flex-direction: column; align-items: stretch; gap: 8px; }
-            .quick-btn { padding: 12px; width: 100%; font-size: 14px; border-radius: 10px;}
-            .row-qty-control { width: 100%; justify-content: center; height: 45px; border-radius: 10px;}
-            .row-note-input { padding: 12px; font-size: 16px; border-radius: 10px; }
+            /* Hızlı işlem hücresi */
+            .quick-action-cell { flex-direction: column; align-items: stretch; gap: 6px; }
+            .quick-btn { padding: 10px; width: 100%; font-size: 12px; border-radius: 8px;}
+            .row-qty-control { width: 100%; justify-content: center; height: 36px; border-radius: 8px; border-width: 1px;}
+            .row-qty-btn { width: 35px; font-size: 18px; }
+            .row-qty-input { width: 45px; font-size: 16px; border-width: 1px;}
+            .row-note-input { padding: 10px; font-size: 14px; border-radius: 8px; border-width: 1px;}
 
             /* Confirm Modal Mobile */
-            .confirm-box { font-size: 20px; padding: 15px 5px; }
-            .highlight { font-size: 22px; padding: 4px 8px; }
-            .confirm-btn-group { flex-direction: column; gap: 10px; margin-top: 25px; }
-            .btn-confirm-yes, .btn-confirm-no { padding: 18px; font-size: 18px; border-radius: 14px;}
+            .confirm-box { font-size: 16px; padding: 10px 0; line-height: 1.5; }
+            .highlight { font-size: 18px; padding: 3px 6px; border-radius: 6px; margin: 2px 0;}
+            .confirm-btn-group { flex-direction: row; gap: 10px; margin-top: 20px; }
+            .btn-confirm-yes, .btn-confirm-no { padding: 15px 10px; font-size: 14px; border-radius: 12px;}
+            
+            /* Filters */
+            .filter-bar { gap: 8px; margin-bottom: 15px; flex-direction: column;}
+            .filter-bar select, .filter-bar input { width: 100%; padding: 12px; font-size: 15px; border-radius: 10px;}
+
+            .empty-state { padding: 40px 10px; }
+            .empty-state-icon { font-size: 50px; margin-bottom: 15px;}
+            .empty-state-text { font-size: 16px; margin-bottom: 20px;}
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
+    <!-- DEVASA HEADER -->
     <div class="header">
         <h1 class="brand-title">Dekant Medya</h1>
         <h2 class="brand-subtitle">Profesyonel Stok Yönetimi</h2>
@@ -318,7 +341,7 @@
                 </select>
 
                 <div class="input-group">
-                    <select id="builderDepSelect" class="custom-select" style="margin-bottom:0; padding:18px;"><option value="">-- Hangi Bölüme Ait? --</option></select>
+                    <select id="builderDepSelect" class="custom-select" style="margin-bottom:0;"><option value="">-- Hangi Bölüme Ait? --</option></select>
                     <input type="text" id="builderMatName" placeholder="Malzeme Adı (Örn: Çift Taraflı Bant)">
                 </div>
 
@@ -379,7 +402,7 @@
 
             <div id="quickUserContainer" style="background:#fff; padding:25px; border-radius:18px; border:2px dashed var(--primary); margin-bottom:25px; display:none; box-shadow:var(--shadow-sm);">
                 <label class="form-label" style="margin-bottom:10px; font-size:15px; color:var(--primary);">Hızlı İşlem Yapacak Personel (Zorunlu):</label>
-                <select id="quickUserSelect" class="custom-select empty-field" style="margin:0; padding:18px; font-size:16px;" onchange="validateField(this)"></select>
+                <select id="quickUserSelect" class="custom-select empty-field" style="margin:0;" onchange="validateField(this)"></select>
             </div>
 
             <div class="table-container" id="detailTableContainer" style="box-shadow: var(--shadow-lg); border:none;">
@@ -397,15 +420,15 @@
             <button class="close-btn" onclick="closeModal('historyModal')">&times;</button>
             <h2>⏱️ Hareket Geçmişi</h2>
             
-            <div style="display:flex; gap:15px; margin-bottom:25px; flex-wrap:wrap;">
-                <select id="logDateFilter" onchange="filterLogs()" class="custom-select" style="flex:1; min-width:140px; margin:0; padding:16px;">
+            <div class="filter-bar" style="display:flex; flex-wrap:wrap;">
+                <select id="logDateFilter" onchange="filterLogs()" class="custom-select" style="flex:1; margin:0; font-weight:700;">
                     <option value="all">Tüm Zamanlar</option>
                     <option value="today">Bugün</option>
                     <option value="month">Bu Ay</option>
                     <option value="year">Bu Yıl</option>
                 </select>
-                <input type="date" id="logCustomDate" onchange="filterLogs()" class="custom-select" style="flex:1; min-width:140px; margin:0; padding:16px; font-family:'Plus Jakarta Sans'; font-weight:700;">
-                <input type="text" id="logSearchInput" placeholder="Personel veya malzeme ara..." onkeyup="filterLogs()" class="custom-select" style="flex:2; min-width:180px; margin:0; background:#fff; padding:16px;">
+                <input type="date" id="logCustomDate" onchange="filterLogs()" class="custom-select" style="flex:1; margin:0; font-weight:700;">
+                <input type="text" id="logSearchInput" placeholder="Personel veya malzeme ara..." onkeyup="filterLogs()" class="custom-select" style="flex:2; margin:0; background:#fff; font-weight:600;">
             </div>
 
             <div class="table-container">
@@ -421,9 +444,9 @@
     <div class="modal-overlay" id="confirmModal" style="z-index: 2000;">
         <div class="modal">
             <div class="confirm-box" id="confirmText"></div>
-            <div class="confirm-btn-group" style="display: flex; gap: 15px; margin-top: 30px;">
-                <button onclick="closeModal('confirmModal')" style="flex:1; padding:20px; border-radius:16px; border:none; cursor:pointer; background:var(--border); color:var(--text-dark); font-weight:900; font-size:18px; transition:0.2s;">İPTAL</button>
-                <button id="executeBtn" style="flex:1; padding:20px; border-radius:16px; border:none; cursor:pointer; background:var(--primary); color:white; font-weight:900; font-size:18px; box-shadow: 0 8px 20px rgba(220,38,38,0.4); transition:0.2s;">ONAYLIYORUM</button>
+            <div class="confirm-btn-group" style="display: flex;">
+                <button onclick="closeModal('confirmModal')" class="btn-confirm-no" style="flex:1; border:none; cursor:pointer; background:var(--border); color:var(--text-dark); font-weight:900; transition:0.2s;">İPTAL</button>
+                <button id="executeBtn" class="btn-confirm-yes" style="flex:1; border:none; cursor:pointer; background:var(--primary); color:white; font-weight:900; box-shadow: 0 8px 20px rgba(220,38,38,0.4); transition:0.2s;">ONAYLIYORUM</button>
             </div>
         </div>
     </div>
@@ -446,7 +469,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // --- GLOBAL DEĞİŞKENLER (v15 YENİ YAPI) ---
+        // --- GLOBAL DEĞİŞKENLER (v15) ---
         let dbData = { users: {}, departments: {}, materials: {} };
         let dbStock = {};
         let dbLogs = [];
@@ -506,7 +529,7 @@
             else { el.classList.remove('filled-field'); }
         };
 
-        // --- UI RENDER (TABS & DASHBOARD) ---
+        // --- UI RENDER ---
         function renderUI() {
             renderTabs();
             renderSettingsData();
@@ -531,7 +554,7 @@
             const deps = Object.entries(dbData.departments);
             
             if (deps.length === 0) {
-                tabsContainer.innerHTML = `<span style="padding:20px; color:var(--text-muted); font-weight:800; font-size:18px;">Lütfen Ayarlardan Bölüm Ekleyin.</span>`;
+                tabsContainer.innerHTML = `<span style="padding:20px; color:var(--text-muted); font-weight:800; font-size:16px;">Ayarlardan Bölüm Ekleyin.</span>`;
                 document.getElementById('dashboardContainer').innerHTML = `
                     <div class="empty-state" style="grid-column: 1/-1;">
                         <div class="empty-state-icon">⚙️</div>
@@ -581,14 +604,14 @@
                         <div class="card-amount">${total}</div>
                         <div class="card-hint">
                             <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                            Detayları & Stokları Yönet
+                            Detayları Yönet
                         </div>
                     </div>
                 `;
             });
         };
 
-        // --- SİSTEM AYARLARI (GELİŞMİŞ DÜZENLEME MİMARİSİ) ---
+        // --- SİSTEM AYARLARI (BUILDER) ---
         window.renderSettingsData = function() {
             const uCont = document.getElementById('settingsUsersList');
             uCont.innerHTML = '';
@@ -861,7 +884,7 @@
         window.confirmTx = (user, matId, matName, variant, type, qty, source, updatedMatObj = null, note = "") => {
             const islem = type === 'in' ? `<span class="highlight success">STOĞA EKLİYOR</span>` : `<span class="highlight danger">STOKTAN DÜŞÜYOR</span>`;
             let vHtml = variant !== 'Standart' ? variant.split(' | ').map(v => `<span class="highlight">${v}</span>`).join(' ') + '<br>' : '';
-            let noteHtml = note ? `<br><br><span style="font-size:18px; color:var(--text-muted); border:2px dashed var(--border); padding:10px; border-radius:10px; display:inline-block;">Not: ${note}</span>` : '';
+            let noteHtml = note ? `<br><br><span style="font-size:16px; color:var(--text-muted); border:2px dashed var(--border); padding:10px; border-radius:10px; display:inline-block;">Not: ${note}</span>` : '';
 
             document.getElementById('confirmText').innerHTML = `
                 <span class="highlight">${user}</span> adlı personel,<br><br>
@@ -968,11 +991,11 @@
                         tbody.innerHTML += `
                             <tr>
                                 ${tdHtml}
-                                <td style="color:var(--text-muted); font-size:15px; max-width:200px; font-weight:500;">${note}</td>
+                                <td style="color:var(--text-muted); font-size:14px; max-width:200px; font-weight:500;">${note}</td>
                                 <td style="text-align:center; font-size:36px; font-weight:900; color:var(--primary);">${qty}</td>
                                 <td>
                                     <div class="quick-action-cell">
-                                        <input type="text" id="row_note_${idx}" class="row-note-input" placeholder="İşlem notu (Opsiyonel)">
+                                        <input type="text" id="row_note_${idx}" class="row-note-input" placeholder="İşlem notu...">
                                         <button class="quick-btn out" onclick="quickAction('${matId}', '${encodedVariant}', 'out', 'row_${idx}', 'row_note_${idx}')">Düş</button>
                                         <div class="row-qty-control"><input type="number" id="row_${idx}" value="1" min="1" class="row-qty-input"></div>
                                         <button class="quick-btn in" onclick="quickAction('${matId}', '${encodedVariant}', 'in', 'row_${idx}', 'row_note_${idx}')">Ekle</button>
@@ -1041,10 +1064,10 @@
                 const statusClass = log.status === 'Giriş' ? 'status-in' : 'status-out';
                 tbody.innerHTML += `
                     <tr>
-                        <td><strong>${log.time.split(' ')[0]}</strong><br><span style="color:var(--text-muted); font-size:13px; font-weight:700;">${log.time.split(' ')[1]}</span></td>
-                        <td style="font-weight:900; font-size:18px; color:var(--text-dark);">${log.user}</td>
-                        <td style="font-size:17px;">${log.detail}</td>
-                        <td style="color:var(--text-muted); font-size:15px; font-weight:500; max-width:250px;">${log.note || '-'}</td>
+                        <td><strong>${log.time.split(' ')[0]}</strong><br><span style="color:var(--text-muted); font-size:12px; font-weight:700;">${log.time.split(' ')[1]}</span></td>
+                        <td style="font-weight:900; font-size:16px; color:var(--text-dark);">${log.user}</td>
+                        <td style="font-size:15px;">${log.detail}</td>
+                        <td style="color:var(--text-muted); font-size:14px; font-weight:500; max-width:200px;">${log.note || '-'}</td>
                         <td style="text-align:right;"><span class="status-badge ${statusClass}">${log.status}</span></td>
                     </tr>
                 `;
